@@ -7,6 +7,7 @@ import ida_auto
 import ida_nalt
 import ida_bytes
 import ida_lines
+import ida_ida
 import ida_idaapi
 import ida_loader
 import ida_kernwin
@@ -167,25 +168,24 @@ class PatchingCore(object):
         """
         Initialize the assembly engine to be used for patching.
         """
-        inf = ida_idaapi.get_inf_structure()
-        arch_name = inf.procname.lower()
+        arch_name = ida_ida.inf_get_procname().lower()
 
         if arch_name == 'metapc':
-            assembler = AsmX86(inf)
+            assembler = AsmX86()
         elif arch_name.startswith('arm'):
-            assembler = AsmARM(inf)
+            assembler = AsmARM()
 
         #
         # TODO: disabled until v0.2.0
         #
         #elif arch_name.startswith("ppc"):
-        #    assembler = AsmPPC(inf)
+        #    assembler = AsmPPC()
         #elif arch_name.startswith("mips"):
-        #    assembler = AsmMIPS(inf)
+        #    assembler = AsmMIPS()
         #elif arch_name.startswith("sparc"):
-        #    assembler = AsmSPARC(inf)
+        #    assembler = AsmSPARC()
         #elif arch_name.startswith("systemz") or arch_name.startswith("s390x"):
-        #    assembler = AsmSystemZ(inf)
+        #    assembler = AsmSystemZ()
         #
 
         else:
